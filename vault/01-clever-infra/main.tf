@@ -35,13 +35,14 @@ resource "clevercloud_docker" "vault_instance" {
   environment = {
     VAULT_LOCAL_CONFIG = jsonencode(
       {
-        "storage" : { "postgresql" : {} },
+        "storage" : {
+          "postgresql" : {
+            "connection_url" : "postgres://${clevercloud_postgresql.vault_storage.user}:${clevercloud_postgresql.vault_storage.password}@${clevercloud_postgresql.vault_storage.host}:${clevercloud_postgresql.vault_storage.port}/${clevercloud_postgresql.vault_storage.database}"
+          }
+        },
         "listener" : [{ "tcp" : { "address" : "0.0.0.0:8080", "tls_disable" : true } }],
-        "default_lease_ttl" : "168h",
-        "max_lease_ttl" : "720h",
-        "disable_mlock": true,
+        "disable_mlock" : true,
         "ui" : true
-      })
-    VAULT_PG_CONNECTION_URL = "postgres://${clevercloud_postgresql.vault_storage.user}:${clevercloud_postgresql.vault_storage.password}@${clevercloud_postgresql.vault_storage.host}:${clevercloud_postgresql.vault_storage.port}/${clevercloud_postgresql.vault_storage.database}"
+    })
   }
 }
