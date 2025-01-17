@@ -4,9 +4,9 @@ terraform {
       source = "hashicorp/vault"
       version = "4.5.0"
     }
-    gitlab = {
-      source = "gitlabhq/gitlab"
-      version = "17.7.0"
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.2"
     }
   }
 }
