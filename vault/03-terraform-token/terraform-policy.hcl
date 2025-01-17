@@ -46,6 +46,12 @@ path "secret/*"
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
+# List, create, update, and delete key/value secrets at secret/
+path "gitlab_users_secrets/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
 # Manage transit secrets engine
 path "transit/*"
 {
@@ -56,4 +62,9 @@ path "transit/*"
 path "sys/health"
 {
   capabilities = ["read", "sudo"]
+}
+
+path "/auth/token/lookup-self"
+{
+  capabilities = ["read"]
 }
