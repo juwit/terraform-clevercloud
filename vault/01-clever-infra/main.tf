@@ -1,15 +1,15 @@
 resource "clevercloud_postgresql" "vault_storage" {
-  name = "vault_storage"
-  plan = "dev"
+  name   = "vault_storage"
+  plan   = "dev"
   region = "par"
 
   provisioner "local-exec" {
     command = "sleep 10 && psql -f vault-schema.sql"
     environment = {
-      PGHOST = self.host
-      PGPORT = self.port
+      PGHOST     = self.host
+      PGPORT     = self.port
       PGDATABASE = self.database
-      PGUSER = self.user
+      PGUSER     = self.user
       PGPASSWORD = self.password
     }
   }
@@ -20,7 +20,7 @@ resource "clevercloud_docker" "vault_instance" {
 
   # auto-scaling disabled
   smallest_flavor = "XS"
-  biggest_flavor = "XS"
+  biggest_flavor  = "XS"
 
   # auto-scaling disabled
   min_instance_count = 1
@@ -28,7 +28,8 @@ resource "clevercloud_docker" "vault_instance" {
 
   # network setup
   additional_vhosts = ["vault-instance.cleverapps.io"]
-  redirect_https = true
+  redirect_https    = true
+  sticky_sessions   = true
 
   # URL for the storage backend
   environment = {
